@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Authors</h1>
+    <ul id="authors"></ul>
+</body>
+
+<script>
+// const url = 'https://randomuser.me/api/?results=10';
+const ul = document.getElementById('authors');
+
+function createNode(element) {
+    return document.createElement(element);
+}
+
+function append(parent, el) {
+    return parent.appendChild(el);
+}
+
+fetch('file.json')
+    .then((resp) => resp.json())
+    .then(function (data) {
+        let authors = data.results;
+        return authors.map(function (author) {
+            let li = createNode('li');
+            let img = createNode('img');
+            let span = createNode('span');
+            let email = createNode('email')
+
+            img.src = author.picture.large;
+            span.innerHTML = `${author.name.title} ${author.name.first} ${author.name.last}`;
+            email.innerHTML = `${author.email}`
+            append(li, img);
+            append(li, span);
+            append(li, email);
+            append(ul, li);
+        })
+    })
+
+    .catch(function (error) {
+        console.log(error);
+    });
+    
+</script>
+
+</html>
